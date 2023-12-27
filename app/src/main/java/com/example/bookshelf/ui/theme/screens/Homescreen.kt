@@ -28,6 +28,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.bookshelf.R
 import com.example.bookshelf.network.BooksPhoto
+import com.example.bookshelf.ui.theme.BookshelfTheme
 import kotlin.reflect.KFunction0
 
 @Composable
@@ -38,7 +39,7 @@ fun HomeScreen(
 ) {
     when (booksUiState) {
         is BookUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
-        is BookUiState.Success -> BookGridScreen(booksUiState.books, modifier = modifier.fillMaxSize())
+        is BookUiState.Success -> BookGridScreen(booksUiState.photo, modifier = modifier.fillMaxSize())
         else -> ErrorScreen(retryAction, modifier.fillMaxSize())
     }
 }
@@ -111,3 +112,17 @@ fun BookGridScreen(photos: List<BooksPhoto>, modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
+fun BookGridPreview() {
+    BookshelfTheme {
+        val mockData = List(2) { BooksPhoto("$it", "") }
+        BookGridScreen(mockData)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ErrorScreenPreview() {
+    BookshelfTheme {
+        ErrorScreenPreview()
+    }
+}
